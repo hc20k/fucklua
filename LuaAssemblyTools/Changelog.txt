@@ -1,0 +1,31 @@
+CHANGELOG/TODO for Lua Assembly Toolkit
+
+- = done
++ = planned
+B = bug
+
++ add .params, .args, .arg, .arguments, .argcount, ... to set the argument count
++ stop writing line info when a LineNumber is 0
++ Find unused constants and remove them
++ Resize MaxStackSize based upon used/unused registers
+
+
+12/4/12 to 12/6/12 - v1.2
+- Add some more samples (make a samples dir?)
+- Complete re-write of the LASM parser, using tokenizer and parser
+- Empty strings now compile
+
+
+8/23/12 - v1.1.1
+- LASM Compiler and Decompiler mini apps
+- Added external files
+- Platform conversion
+- Fixed a decompiler bug, code now can round trip and then run.
+
+8/22/12 - v1.1
+- LASM Decompiler
+- LASM Compiler
+- ROUND TRIP LASM DECOMPILER/COMPILER WORKS!!! :D HECK YES
+
+8/21/12 - v 1.0
+- Initial Commit
