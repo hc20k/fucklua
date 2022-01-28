@@ -2284,7 +2284,7 @@ char* ProcessCode(Proto* f, int indent, int func_checking, char* funcnumstr) {
 				}
 			} else {
 				StringBuffer_set(str, upvstr);
-				MakeIndex(F, str, keystr, DOT);
+				MakeIndex(F, str, keystr, (strcmp(upvstr, "") == 0 ? TABLE : DOT));
 			}
 			TRY(AssignReg(F, a, StringBuffer_getRef(str), 0, 1));
 			free(keystr);
@@ -2333,7 +2333,7 @@ char* ProcessCode(Proto* f, int indent, int func_checking, char* funcnumstr) {
 				}
 			} else {
 				StringBuffer_set(str, upvstr);
-				MakeIndex(F, str, keystr, DOT);
+				MakeIndex(F, str, keystr, TABLE); // Dots are kinda weird. Wonder if this will work.
 			}
 			TRY(AssignGlobalOrUpvalue(F, StringBuffer_getRef(str), cstr));
 			free(keystr);
@@ -3047,7 +3047,7 @@ LOGIC_NEXT_JMP:
 			int i;
 			int uvn;
 			int cfnum = functionnum;
-			Proto* cf = f->p[c];
+			Proto* cf = f->p[bc];
 			char* tmpname = (char*)calloc(strlen(funcnumstr) + 64, sizeof(char));
 
 			uvn = NUPS(cf);
@@ -3124,16 +3124,16 @@ LOGIC_NEXT_JMP:
 				char* code = NULL;
 				char* newfuncnumstr = (char*)calloc(strlen(funcnumstr) + 12, sizeof(char));
 				functionnum = c;
-				sprintf(newfuncnumstr, "%s_%d", funcnumstr, c);
+				sprintf(newfuncnumstr, "%s_%d", funcnumstr, functionnum);
 				code = PrintFunctionOnlyParamsAndUpvalues(cf, F->indent, newfuncnumstr);
 				StringBuffer_setBuffer(str, code);
 			} else if (!process_sub) {
-				StringBuffer_printf(str, "DecompiledFunction_%s_%d", funcnumstr, c);
+				StringBuffer_printf(str, "DecompiledFunction_%s_%d", funcnumstr, bc);
 			} else {
 				char* code = NULL;
 				char* newfuncnumstr = (char*)calloc(strlen(funcnumstr) + 12, sizeof(char));
 				functionnum = c;
-				sprintf(newfuncnumstr, "%s_%d", funcnumstr, c);
+				sprintf(newfuncnumstr, "%s_%d", funcnumstr, functionnum);
 				code = ProcessCode(cf, F->indent, 0, newfuncnumstr);
 				StringBuffer_setBuffer(str, code);
 			}
