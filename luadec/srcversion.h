@@ -1,6 +1,6 @@
 #ifndef LUADEC_SRCVERSION_H
 #define LUADEC_SRCVERSION_H
 
-#define SRCVERSION "6ce2d96"
+#define SRCVERSION "f9dfcf6"
 
 #endif // #ifndef LUADEC_SRCVERSION_H

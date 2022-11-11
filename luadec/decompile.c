@@ -91,12 +91,12 @@ const char* getLocalName(const Proto* f, int i) {
 
 // i : index of Proto.upvalues
 const char* getUpvalName(const Proto* f, int i) {
-	if (f->upvalues && i < f->sizeupvalues) {
+	if (f->upvalues && i < f->sizeupvalues && i != 0) {
 		// no need to test after FixUpvalNames
 		return getstr(UPVAL_NAME(f, i));
 	} else {
-		sprintf(unknown_upvalue, "ERROR_unknown_upvalue_%d", i);
-		return unknown_upvalue;
+		//sprintf(unknown_upvalue, "ERROR_unknown_upvalue_%d", i);
+		return "";
 	}
 }
 
@@ -1661,7 +1661,8 @@ void listParams(const Proto* f, StringBuffer* str) {
 
 void listUpvalues(const Proto* f, StringBuffer* str) {
 	int i = 0;
-	StringBuffer_add(str, getUpvalName(f, i));
+	const char* upvalName = getUpvalName(f, i);
+	StringBuffer_add(str, upvalName);
 	for (i = 1; i < NUPS(f); i++) {
 		StringBuffer_addPrintf(str, ", %s", getUpvalName(f, i));
 	}

@@ -33,7 +33,7 @@
 
 #define	OUTPUT "luadec.out"		/* default output file */
 
-#define VERSION "2.3"
+#define VERSION "2.4"
 
 #define VERSION_STRING VERSION " rev: " SRCVERSION
 
@@ -84,7 +84,7 @@ static void usage(const char* message, const char* arg) {
 		"  -l2 LDS2 declare locals as defined by LDS2\n"
 		"  -dg      disable built-in local guessing\n"
 		"  -pg      don't run just print out the LDS2 string used\n"
-		"  -ds      DISABLE stripping of compiled code before decompiling\n"
+		"  -s       Enable stripping of compiled code before decompiling\n"
 		"  -a       always declare all register as locals\n"
 		"  -fc      compile decompiled function and compare\n"
 		"  -se      output strings using selected encoding, available encodings are "ENCODINGS"\n"
@@ -228,8 +228,6 @@ int LocalsLoad(const char* text) {
 }
 
 static int doargs(int argc, char* argv[]) {
-	stripping = 1;
-
 	int i;
 	if (argv[0]!=NULL && *argv[0]!=0) progname=argv[0];
 	for (i=1; i<argc; i++) {
@@ -291,8 +289,8 @@ static int doargs(int argc, char* argv[]) {
 		else if (IS("-fc")) {
 			func_check = 1;
 		}
-		else if (IS("-ds")) {
-			stripping = 0;
+		else if (IS("-s")) {
+			stripping = 1;
 		}
 		else if (IS("-se")) {
 			++i;
